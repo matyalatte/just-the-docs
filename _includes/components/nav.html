@@ -35,7 +35,12 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
     </button>
     {%- endif -%}
-    <a href="{{ node.url | relative_url }}" class="nav-list-link">{{ node.title }}</a>
+    {%- if node.is_group -%}
+      <span class="nav-list-link">{{ node.title }}</span>
+    {%- else -%}
+      <a href="{{ node.url | relative_url }}" class="nav-list-link">{{ node.title }}</a>
+    {%- endif -%}
+    
     {%- if node.has_children -%}
       {%- assign children_list = second_level_pages
             | where: "parent", node.title -%}
@@ -50,7 +55,11 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
           </button>
           {%- endif -%}
-          <a href="{{ child.url | relative_url }}" class="nav-list-link">{{ child.title }}</a>
+          {%- if child.is_group -%}
+            <span class="nav-list-link">{{ child.title }}</span> 
+          {%- else -%}
+            <a href="{{ child.url | relative_url }}" class="nav-list-link">{{ child.title }}</a>
+          {%- endif -%}
           {%- if child.has_children -%}
             {%- assign grand_children_list = third_level_pages
                   | where: "parent", child.title
